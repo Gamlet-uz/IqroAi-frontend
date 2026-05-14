@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>IqroAi</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #eef2f3; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .box { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 350px; }
+        h2 { color: #333; text-align: center; margin-bottom: 20px; }
+        input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #0088cc; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; transition: 0.3s; }
+        button:hover { background: #006699; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>IqroAi</h2>
+    <input type="text" id="user_name" placeholder="Ismingiz">
+    <input type="text" id="user_msg" placeholder="Xabaringiz">
+    <button onclick="submit()">Yuborish</button>
+</div>
+
+<script>
+    async function submit() {
+        const name = document.getElementById('user_name').value;
+        const message = document.getElementById('user_msg').value;
+
+        if(!name || !message) return alert("Iltimos, maydonlarni to'ldiring!");
+
+        try {
+            const res = await fetch('http://localhost:3000/send', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, message })
+            });
+            if(res.ok) alert("Xabar yuborildi va bazaga saqlandi!");
+        } catch (e) {
+            alert("Xatolik: Server yoqilmagan bo'lishi mumkin.");
+        }
+    }
+</script>
+
+</body>
+</html>
